@@ -1,21 +1,32 @@
 require("dotenv").config();
-const { Pool } = require("pg");
+const app = require("./app");
+const pool = require("./src/config/db");
 
-const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
-  ssl: {
-    rejectUnauthorized: false,
-  },
-});
+const PORT = process.env.PORT || 3000;
 
-async function testDB() {
+async function initDb() {
+  await pool.query("SELECT NOW()");
+  await pool.query(`
+    CREATE TABLE IF NOT EXISTS books (
+      id SERIAL PRIMARY KEY,
+      title TEXT NOT NULL,
+      author TEXT NOT NULL,
+      created_at TIMESTAMPTZ DEFAULT NOW()
+    )
+  `);
+}
+
+async function start() {
   try {
-    const res = await pool.query("SELECT NOW()");
-    console.log("✅ Connected");
-    console.log(res.rows[0]);
+    await initDb();
+    console.log("✅ DB ready");
+    app.listen(PORT, () => {
+      console.log(`✅ Server listening on ${PORT}`);
+    });
   } catch (err) {
-    console.error("❌ Error:", err.message);
+    console.error("❌ Startup error:", err.message);
+    process.exit(1);
   }
 }
 
-testDB();
+start();
