@@ -1,4 +1,4 @@
-const { searchBooks } = require("../services/bookService");
+const { searchBooks, getBookDetails } = require("../services/bookService");
 const { generateSummary } = require("../services/geminiService");
 
 async function getBooks(req, res) {
@@ -33,4 +33,19 @@ async function getBookSummary(req, res) {
   }
 }
 
-module.exports = { getBooks, getBookSummary };
+async function getBookDataController(req, res) {
+  try {
+    const { id } = req.params;
+    
+    if (!id) {
+      return res.status(400).json({ error: "Book ID is required" });
+    }
+
+    const book = await getBookDetails(id);
+    res.json(book);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+}
+
+module.exports = { getBooks, getBookSummary, getBookData: getBookDataController };

@@ -10,6 +10,6 @@ app.use(cors());
 app.use(express.json());
 
 app.use("/api/auth", authRoutes);
-app.use("/api", bookRoutes);
+app.use("/api/books", bookRoutes);
 
 module.exports = app;

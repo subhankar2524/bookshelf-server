@@ -47,10 +47,16 @@ Searches for books using a query string.
 curl -X GET "http://localhost:8080/api/books?q=harry+potter"
 ```
 
+### Get Book Data
+Give a single book details.
+```bash
+curl -X GET "http://localhost:8080/api/books/abYKXvCwEToC"
+```
+
 ### Generate Summary
 Generates a summary for a book.
 ```bash
-curl -X POST 'http://localhost:8080/api/summary' \
+curl -X POST 'http://localhost:8080/api/books/summary' \
   --header 'Content-Type: application/json' \
   --body '{
   "title": "Harry Potter",
