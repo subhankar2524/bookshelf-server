@@ -41,20 +41,8 @@ curl -X POST http://localhost:8080/api/auth/login \
 ---
 
 ## Books API
-
-### Add a Book
-Adds a new book to the collection.
+### Search Books
+Searches for books using a query string.
 ```bash
-curl -X POST http://localhost:8080/api/books \
-     -H "Content-Type: application/json" \
-     -d '{
-           "title": "The Great Gatsby",
-           "author": "F. Scott Fitzgerald"
-         }'
-```
-
-### Get All Books
-Retrieves a list of all books.
-```bash
-curl -X GET http://localhost:8080/api/books
+curl -X GET "http://localhost:8080/api/books?q=harry+potter"
 ```
