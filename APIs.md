@@ -46,3 +46,16 @@ Searches for books using a query string.
 ```bash
 curl -X GET "http://localhost:8080/api/books?q=harry+potter"
 ```
+
+### Generate Summary
+Generates a summary for a book.
+```bash
+curl -X POST 'http://localhost:8080/api/summary' \
+  --header 'Content-Type: application/json' \
+  --body '{
+  "title": "Harry Potter",
+  "authors": ["S. Gunelius"],
+  "description": "The Harry Potter books are the bestselling books of all time. In this fascinating study, Susan Gunelius analyzes every aspect of the brand phenomenon that is Harry Potter. Delving into price wars, box office revenue, and brand values, amongst other things, this is the story of the most incredible brand success there has ever been.",
+  "categories": ["Business & Economics"]
+}'
+```
