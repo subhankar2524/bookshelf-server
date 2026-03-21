@@ -65,3 +65,27 @@ curl -X POST 'http://localhost:8080/api/books/summary' \
   "categories": ["Business & Economics"]
 }'
 ```
+
+---
+
+## User Actions API
+
+### Create Bookmark
+Saves a book to the user's saved list. Requires authentication.
+```bash
+curl -X POST http://localhost:8080/api/user-actions \
+     -H "Content-Type: application/json" \
+     -H "Authorization: Bearer <token>" \
+     -d '{
+           "book_id": "abYKXvCwEToC",
+           "title": "Harry Potter",
+           "thumbnail": "http://books.google.com/books/content?id=abYKXvCwEToC&printsec=frontcover&img=1&zoom=1&source=gbs_api"
+         }'
+```
+
+### Delete Bookmark
+Deletes a bookmark by its ID. Requires authentication.
+```bash
+curl -X DELETE http://localhost:8080/api/user-actions/:id \
+     -H "Authorization: Bearer <token>"
+```

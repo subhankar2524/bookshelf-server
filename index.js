@@ -22,6 +22,24 @@ async function createTables() {
       created_at TIMESTAMPTZ DEFAULT NOW()
     )
   `);
+
+  await pool.query(`
+    CREATE TABLE IF NOT EXISTS saved_books (
+    id SERIAL PRIMARY KEY,
+    user_id INTEGER NOT NULL,
+    book_id TEXT NOT NULL,
+    title TEXT NOT NULL,
+    thumbnail TEXT,
+    created_at TIMESTAMPTZ DEFAULT NOW(),
+
+    CONSTRAINT fk_user
+      FOREIGN KEY(user_id)
+      REFERENCES users(id)
+      ON DELETE CASCADE,
+
+    CONSTRAINT unique_user_book UNIQUE(user_id, book_id)
+    );
+  `);
 }
 
 async function start() {
