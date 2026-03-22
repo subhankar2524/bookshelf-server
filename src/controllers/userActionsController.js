@@ -15,6 +15,9 @@ const createBookmark = async (req, res) => {
     );
     res.status(201).json(result.rows[0]);
   } catch (err) {
+    // console.log(err);
+    // console.log(err.code);
+    
     if (err.code === "23505") {
       // unique_user_book constraint
       return res.status(400).json({ error: "Book already bookmarked" });
