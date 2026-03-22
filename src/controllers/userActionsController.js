@@ -45,7 +45,23 @@ const deleteBookmark = async (req, res) => {
   }
 };
 
+const getBookmarks = async (req, res) => {
+  const user_id = req.user.id;
+
+  try {
+    const result = await pool.query(
+      "SELECT * FROM saved_books WHERE user_id = $1",
+      [user_id]
+    );
+    res.json(result.rows);
+  } catch (err) {
+    console.error("Error fetching bookmarks:", err.message);
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
+
 module.exports = {
   createBookmark,
   deleteBookmark,
+  getBookmarks,
 };
